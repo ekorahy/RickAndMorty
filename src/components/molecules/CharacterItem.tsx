@@ -9,9 +9,15 @@ export default function CharacterItem({
   image,
 }: CharacterItemProps) {
   return (
-    <li className="shadow-xl w-full p-4">
-      <Image src={image} className="w-full" width={100} height={100} alt={`${name} image`} />
-      <Link href={`/characters/detail/${id}`}>{name}</Link>
+    <li className="w-full p-4 shadow-xl">
+      <Image
+        src={image}
+        className="w-full"
+        width={100}
+        height={100}
+        alt={`${name} image`}
+      />
+      <Link href={`/characters/${id}`}>{name}</Link>
       <p>{status}</p>
       <p>{species}</p>
     </li>

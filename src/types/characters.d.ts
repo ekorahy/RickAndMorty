@@ -8,4 +8,8 @@ interface CharacterItemProps {
 
 interface CharactersListProps {
   results: CharacterItemProps[];
-} 
+}
+
+interface CharacterDetailSectionProps {
+  id: string;
+}
