@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+// Character queries
 export const GET_CHARACTERS = gql`
   query GetCharacters {
     characters {
@@ -15,7 +16,7 @@ export const GET_CHARACTERS = gql`
 `;
 
 export const GET_CHARACTER = gql`
-  query ($id: ID!) {
+  query GetCharacter($id: ID!) {
     character(id: $id) {
       id
       name
@@ -31,6 +32,36 @@ export const GET_CHARACTER = gql`
         name
       }
       created
+    }
+  }
+`;
+
+// Location queries
+export const GET_LOCATIONS = gql`
+  query GetLocations {
+    locations {
+      results {
+        id
+        name
+        type
+        dimension
+      }
+    }
+  }
+`;
+
+export const GET_LOCATION = gql`
+  query GetLocation($id: ID!) {
+    location(id: $id) {
+      id
+      name
+      type
+      dimension
+      residents {
+        id
+        name
+        image
+      }
     }
   }
 `;
