@@ -1,4 +1,5 @@
 type ImageAnimationDirection = 'left' | 'right';
+type ButtonVariant = 'characters' | 'locations' | 'episodes';
 
 interface NavItemProps {
   name: string;
@@ -13,4 +14,9 @@ interface CharacterImageItemProps {
 interface CharacterImageListProps {
   direction: ImageAnimationDirection;
   bottom: string;
+}
+
+interface ButtonProps {
+  route: string;
+  variant: ButtonVariant;
 }
