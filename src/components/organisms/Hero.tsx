@@ -3,7 +3,7 @@ import CharactersImageList from "../molecules/CharactersImageList";
 
 export default function Hero() {
   return (
-    <section className="relative h-[100vh] overflow-hidden text-center">
+    <section className="relative h-screen overflow-hidden text-center">
       <div className="relative flex h-full flex-col items-center justify-center px-4">
         <h2 className="relative z-10 mb-2 animate-gradient-x bg-gradient-rainbow bg-[length:200%_200%] bg-clip-text text-4xl font-bold text-transparent">
           Explore the Universe of Rick and Morty
