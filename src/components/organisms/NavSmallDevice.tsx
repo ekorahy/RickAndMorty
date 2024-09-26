@@ -28,14 +28,14 @@ export default function NavSmallDevice() {
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex h-full flex-col justify-between">
-          <NavList />
+        <div className="flex h-full flex-col gap-8">
           <button
             onClick={handlerMenuOpen}
             className="mx-auto rounded-full border border-red-400 p-2 text-xl text-red-400"
           >
             <IoMdClose />
           </button>
+          <NavList />
         </div>
       </div>
     </nav>
