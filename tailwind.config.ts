@@ -17,8 +17,8 @@ const config: Config = {
       },
       animation: {
         'gradient-x': 'gradient-x 8s ease-in-out infinite',
-        'scroll-left': 'scrollLeft 50s linear infinite',
-        'scroll-right': 'scrollRight 50s linear infinite',
+        'scroll-left': 'scrollLeft 10s linear infinite',
+        'scroll-right': 'scrollRight 10s linear infinite',
       },
       keyframes: {
         'gradient-x': {
