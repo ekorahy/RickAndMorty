@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-slate-950 text-slate-50;
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-50;
+  }
+
+  .text-outline {
+    -webkit-text-stroke: 1px #f8fafc;
+  }
 }
