@@ -1,5 +1,7 @@
 type ImageAnimationDirection = 'left' | 'right';
 type ButtonVariant = 'characters' | 'locations' | 'episodes';
+type TitlePageVariant = 'cyan' | 'fuchsia' | 'amber';
+type StatusVariant = 'Alive' | 'Dead' | 'unknown';
 
 interface NavItemProps {
   name: string;
@@ -19,4 +21,13 @@ interface CharacterImageListProps {
 interface ButtonProps {
   route: string;
   variant: ButtonVariant;
+}
+
+interface TitlePageProps {
+  title: string;
+  variant: TitlePageVariant;
+}
+
+interface StatusProps {
+  variant: StatusVariant;
 }
