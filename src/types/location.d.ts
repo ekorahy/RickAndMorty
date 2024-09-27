@@ -1,3 +1,5 @@
+type ResidentItemVariant = 'fuchsia' | 'amber';
+
 interface LocationItemProps {
   id: string;
   name: string;
@@ -17,8 +19,10 @@ interface ResidentItemProps {
   id: string;
   name: string;
   image: string;
+  variant: ResidentItemVariant;
 }
 
 interface ResidentsListProps {
-  residents: ResidentItemProps[]
+  residents: ResidentItemProps[],
+  variant: ResidentItemVariant;
 }

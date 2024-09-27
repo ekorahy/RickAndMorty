@@ -17,7 +17,7 @@ export default function LocationDetailSection({
 
   return (
     <section className="container mx-auto my-32 overflow-hidden px-4 lg:px-8">
-      <TitlePage title={name} variant="amber" />
+      <TitlePage title={name} variant="fuchsia" />
 
       <table className="mt-6 min-w-full table-auto border-collapse border border-slate-300">
         <tbody>
@@ -37,7 +37,7 @@ export default function LocationDetailSection({
             <th className="border px-4 py-2 text-left align-top">Residents</th>
             <td className="border px-4 py-2">
               {residents.length > 0 ? (
-                <ResidentsList residents={residents} />
+                <ResidentsList residents={residents} variant="fuchsia" />
               ) : (
                 "No residents"
               )}
