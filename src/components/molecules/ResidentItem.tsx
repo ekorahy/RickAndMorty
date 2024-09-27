@@ -1,14 +1,31 @@
 "use client";
 
+import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-export default function ResidentItem({ id, name, image }: ResidentItemProps) {
+export default function ResidentItem({
+  id,
+  name,
+  image,
+  variant,
+}: ResidentItemProps) {
   const router = useRouter();
+  let residentItemStyle;
+
+  switch (variant) {
+    case "fuchsia":
+      residentItemStyle = "group-hover:text-fuchsia-400";
+      break;
+    case "amber":
+      residentItemStyle = "group-hover:text-amber-400";
+      break;
+  }
 
   const handleItemClick = () => {
     router.push(`/characters/${id}`);
   };
+
   return (
     <li
       className="group p-4 shadow hover:cursor-pointer"
@@ -21,7 +38,7 @@ export default function ResidentItem({ id, name, image }: ResidentItemProps) {
         height={100}
         alt={`${name} image`}
       />
-      <h4 className="max-w-60 font-bold group-hover:text-amber-400">{name}</h4>
+      <h4 className={clsx("max-w-60 font-bold", residentItemStyle)}>{name}</h4>
     </li>
   );
 }

@@ -37,7 +37,7 @@ export default function EpisodeDetailSection({
             <th className="border px-4 py-2 text-left align-top">Characters</th>
             <td className="border px-4 py-2">
               {characters.length > 0 ? (
-                <ResidentsList residents={characters} />
+                <ResidentsList residents={characters} variant="amber" />
               ) : (
                 "No characters"
               )}
