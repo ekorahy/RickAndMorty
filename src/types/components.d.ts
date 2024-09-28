@@ -2,6 +2,8 @@ type ImageAnimationDirection = 'left' | 'right';
 type ButtonVariant = 'characters' | 'locations' | 'episodes';
 type TitlePageVariant = 'cyan' | 'fuchsia' | 'amber';
 type StatusVariant = 'Alive' | 'Dead' | 'unknown';
+type ButtonPaginationColor = 'cyan' | 'fuchsia' | 'amber';
+type ButtonPaginationVariant = 'prev' | 'next' | 'value';
 
 interface NavItemProps {
   name: string;
@@ -30,4 +32,13 @@ interface TitlePageProps {
 
 interface StatusProps {
   variant: StatusVariant;
+}
+
+interface ButtonPaginationProps {
+  variant: ButtonPaginationVariant;
+  value?: number;
+  color: ButtonPaginationColor;
+  active?: boolean;
+  disabled?: boolean;
+  onClick: () => void;
 }
