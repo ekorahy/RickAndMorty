@@ -4,12 +4,12 @@ import { gql } from "@apollo/client";
 export const GET_CHARACTERS = gql`
   query GetCharacters($page: Int!) {
     characters(page: $page) {
-    info {
-      count
-      pages
-      next
-      prev
-    }
+      info {
+        count
+        pages
+        next
+        prev
+      }
       results {
         id
         name
@@ -80,8 +80,14 @@ export const GET_LOCATION = gql`
 
 // Episode queries
 export const GET_EPISODES = gql`
-  query GetEpisodes {
-    episodes {
+  query GetEpisodes($page: Int!) {
+    episodes(page: $page) {
+      info {
+        count
+        pages
+        next
+        prev
+      }
       results {
         id
         name
