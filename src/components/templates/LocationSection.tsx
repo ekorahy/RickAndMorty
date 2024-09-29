@@ -6,6 +6,7 @@ import LocationList from "../organisms/LocationList";
 import TitlePage from "../atoms/TitlePage";
 import { useRouter, useSearchParams } from "next/navigation";
 import ButtonPagination from "../atoms/ButtonPagination";
+import SearchInput from "../molecules/SearchInput";
 import { useState, useEffect } from "react";
 
 export default function LocationsSection() {
@@ -14,6 +15,7 @@ export default function LocationsSection() {
   const [screenWidth, setScreenWidth] = useState(0);
 
   const page = parseInt(searchParams.get("page") || "1", 10);
+  const keyword = searchParams.get("keyword") || "";
 
   const { loading, error, data } = useQuery(GET_LOCATIONS, {
     variables: { page },
@@ -32,14 +34,17 @@ export default function LocationsSection() {
     }
   }, [searchParams, router]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newKeyword = e.target.value;
+    router.push(`?page=1&keyword=${newKeyword}`);
+  };
 
-  const { results } = data.locations;
-  const { next, prev, pages } = data.locations.info;
+  const handleClearSearch = () => {
+    router.push(`?page=${page}`);
+  };
 
   const handlePageChange = (newPage: number) => {
-    router.push(`?page=${newPage}`);
+    router.push(`?page=${newPage}&keyword=${keyword}`);
   };
 
   const createPaginationRange = () => {
@@ -70,18 +75,37 @@ export default function LocationsSection() {
     return range;
   };
 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const { results } = data.locations;
+  const { next, prev, pages } = data.locations.info;
+
+  const filteredResults = results.filter((location: { name: string }) =>
+    location.name.toLowerCase().includes(keyword.toLowerCase()),
+  );
+
   const paginationRange = createPaginationRange();
 
   return (
     <section className="container mx-auto my-32 px-4 lg:px-8">
       <TitlePage title="Locations" variant="fuchsia" />
+
+      <SearchInput
+        keyword={keyword}
+        placeholder="locations"
+        onSearchChange={handleSearchChange}
+        onClearSearch={handleClearSearch}
+      />
+
       <div>
-        {results.length > 0 ? (
-          <LocationList results={results} />
+        {filteredResults.length > 0 ? (
+          <LocationList results={filteredResults} />
         ) : (
           <p>No locations found</p>
         )}
       </div>
+
       <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
         <ButtonPagination
           variant="prev"
