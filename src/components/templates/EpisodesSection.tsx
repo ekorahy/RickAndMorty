@@ -8,6 +8,8 @@ import ButtonPagination from "../atoms/ButtonPagination";
 import SearchInput from "../molecules/SearchInput";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import EpisodeItemSkeleton from "../molecules/EpisodeItemSkeleton";
+import React from "react";
 
 export default function EpisodesSection() {
   const searchParams = useSearchParams();
@@ -75,15 +77,13 @@ export default function EpisodesSection() {
     return range;
   };
 
-  if (loading) return <p>Loading ...</p>;
-  if (error) return <p>{error.message}</p>;
+  const { results } = data?.episodes || {};
+  const { next, prev, pages } = data?.episodes?.info || {};
 
-  const { results } = data.episodes;
-  const { next, prev, pages } = data.episodes.info;
-
-  const filteredResults = results.filter((episode: { name: string }) =>
-    episode.name.toLowerCase().includes(keyword.toLowerCase()),
-  );
+  const filteredResults =
+    results?.filter((episode: { name: string }) =>
+      episode.name.toLowerCase().includes(keyword.toLowerCase()),
+    ) || [];
 
   const paginationRange = createPaginationRange();
 
@@ -98,46 +98,58 @@ export default function EpisodesSection() {
         onClearSearch={handleClearSearch}
       />
 
-      <div>
-        {filteredResults.length > 0 ? (
-          <EpisodesList results={filteredResults} />
-        ) : (
-          <p>Episodes not found</p>
-        )}
-      </div>
+      {loading ? (
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+          {Array.from({ length: 20 }, (_, index) => (
+            <EpisodeItemSkeleton key={index} />
+          ))}
+        </ul>
+      ) : error ? (
+        <p className="text-center text-red-400">Error: {error.message}</p>
+      ) : (
+        <>
+          <div>
+            {filteredResults.length > 0 ? (
+              <EpisodesList results={filteredResults} />
+            ) : (
+              <p>Episodes not found</p>
+            )}
+          </div>
 
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
-        <ButtonPagination
-          variant="prev"
-          color="amber"
-          disabled={!prev}
-          onClick={() => handlePageChange(page - 1)}
-        />
-
-        {paginationRange.map((pageNumber, index) =>
-          typeof pageNumber === "number" ? (
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
             <ButtonPagination
-              key={index}
+              variant="prev"
               color="amber"
-              variant="value"
-              value={pageNumber}
-              active={page === pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
+              disabled={!prev}
+              onClick={() => handlePageChange(page - 1)}
             />
-          ) : (
-            <span key={index} className="mx-2 text-gray-500">
-              ...
-            </span>
-          ),
-        )}
 
-        <ButtonPagination
-          variant="next"
-          color="amber"
-          disabled={!next}
-          onClick={() => handlePageChange(page + 1)}
-        />
-      </div>
+            {paginationRange.map((pageNumber, index) =>
+              typeof pageNumber === "number" ? (
+                <ButtonPagination
+                  key={index}
+                  color="amber"
+                  variant="value"
+                  value={pageNumber}
+                  active={page === pageNumber}
+                  onClick={() => handlePageChange(pageNumber)}
+                />
+              ) : (
+                <span key={index} className="mx-2 text-gray-500">
+                  ...
+                </span>
+              ),
+            )}
+
+            <ButtonPagination
+              variant="next"
+              color="amber"
+              disabled={!next}
+              onClick={() => handlePageChange(page + 1)}
+            />
+          </div>
+        </>
+      )}
     </section>
   );
 }
