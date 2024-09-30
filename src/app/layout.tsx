@@ -5,7 +5,10 @@ import Header from "@/components/organisms/Header";
 import Main from "@/components/organisms/Main";
 
 export const metadata: Metadata = {
-  title: "Rick and Morty",
+  title: {
+    template: "%s | Rick and Morty",
+    default: "Rick and Morty",
+  },
   icons: "/logo.png",
 };
 

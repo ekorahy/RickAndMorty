@@ -49,3 +49,8 @@ interface SearchInputProps {
   onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClearSearch: () => void;
 }
+
+interface ApolloProviderSectionProps {
+  withSuspense: boolean;
+  children: ReactNode;
+}

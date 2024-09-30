@@ -1,16 +1,15 @@
-"use client";
-
+import ApolloProviderSection from "@/components/organisms/ApolloProviderSection";
 import CharacterSection from "@/components/templates/CharacterSection";
-import { client } from "@/graphql/apolloClient";
-import { ApolloProvider } from "@apollo/client";
-import { Suspense } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Characters",
+};
 
 export default function Characters() {
   return (
-    <ApolloProvider client={client}>
-      <Suspense>
-        <CharacterSection />
-      </Suspense>
-    </ApolloProvider>
+    <ApolloProviderSection withSuspense>
+      <CharacterSection />
+    </ApolloProviderSection>
   );
 }
