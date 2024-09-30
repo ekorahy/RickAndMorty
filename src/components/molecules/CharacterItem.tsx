@@ -1,7 +1,9 @@
+"use client";
+
 import Image from "next/image";
-import Link from "next/link";
 import Status from "./Status";
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 
 export default function CharacterItem({
   id,
@@ -10,19 +12,28 @@ export default function CharacterItem({
   species,
   image,
 }: CharacterItemProps) {
+  const router = useRouter();
+
   const validStatus: StatusVariant =
     status === "Alive" || status === "Dead" || status === "unknown"
       ? status
       : "unknown";
 
+  const handleItemClick = () => {
+    router.push(`/characters/${id}`);
+  };
+
   return (
-    <li className="w-full">
-      <div className="relative mb-2">
+    <li className="group w-full hover:cursor-pointer" onClick={handleItemClick}>
+      <div className="relative mb-2 overflow-hidden rounded-xl">
         <Image
           src={image}
-          className={clsx("h-72 w-full rounded-xl object-cover", {
-            grayscale: validStatus === "Dead",
-          })}
+          className={clsx(
+            "h-72 w-full object-cover duration-300 ease-in-out group-hover:scale-150",
+            {
+              grayscale: validStatus === "Dead",
+            },
+          )}
           width={100}
           height={100}
           alt={`${name} image`}
@@ -31,8 +42,8 @@ export default function CharacterItem({
           {species}
         </p>
       </div>
-      <h4 className="w-max text-lg font-bold hover:text-cyan-400">
-        <Link href={`/characters/${id}`}>{name}</Link>
+      <h4 className="w-max text-lg font-bold group-hover:text-cyan-400">
+        {name}
       </h4>
       <Status variant={validStatus} />
     </li>
