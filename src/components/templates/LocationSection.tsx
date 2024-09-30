@@ -6,10 +6,10 @@ import LocationList from "../organisms/LocationList";
 import TitlePage from "../atoms/TitlePage";
 import { useRouter, useSearchParams } from "next/navigation";
 import ButtonPagination from "../atoms/ButtonPagination";
-import SearchInput from "../molecules/SearchInput";
 import { useState, useEffect } from "react";
 import LocationItemSkeleton from "../molecules/LocationItemSkeleton";
 import React from "react";
+import SearchInputLocations from "../molecules/SearchInputLocations";
 
 export default function LocationsSection() {
   const searchParams = useSearchParams();
@@ -38,7 +38,7 @@ export default function LocationsSection() {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newKeyword = e.target.value;
-    router.push(`?page=1&keyword=${newKeyword}`);
+    router.push(`?page=${page}&keyword=${newKeyword}`);
   };
 
   const handleClearSearch = () => {
@@ -89,11 +89,12 @@ export default function LocationsSection() {
     <section className="container mx-auto my-32 px-4 lg:px-8">
       <TitlePage title="Locations" variant="fuchsia" />
 
-      <SearchInput
+      <SearchInputLocations
         keyword={keyword}
         placeholder="Locations"
         onSearchChange={handleSearchChange}
         onClearSearch={handleClearSearch}
+        data={filteredResults}
       />
 
       <div>
