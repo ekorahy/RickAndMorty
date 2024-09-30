@@ -1,16 +1,15 @@
-"use client";
-
+import ApolloProviderSection from "@/components/organisms/ApolloProviderSection";
 import LocationsSection from "@/components/templates/LocationSection";
-import { client } from "@/graphql/apolloClient";
-import { ApolloProvider } from "@apollo/client";
-import { Suspense } from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Locations",
+};
 
 export default function Locations() {
   return (
-    <ApolloProvider client={client}>
-      <Suspense>
-        <LocationsSection />
-      </Suspense>
-    </ApolloProvider>
+    <ApolloProviderSection withSuspense={false}>
+      <LocationsSection />
+    </ApolloProviderSection>
   );
 }
