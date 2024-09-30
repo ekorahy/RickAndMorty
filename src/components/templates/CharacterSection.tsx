@@ -32,7 +32,7 @@ export default function CharacterSection() {
 
   useEffect(() => {
     if (!searchParams.get("page")) {
-      router.push(`?page=1`);
+      router.push("?page=1");
     }
   }, [searchParams, router]);
 
@@ -78,69 +78,72 @@ export default function CharacterSection() {
     return range;
   };
 
+  const { results } = data?.characters || { results: [], info: {} };
+  const { next, prev } = data?.characters?.info || {};
+
+  const filteredResults = results.filter((character: { name: string }) =>
+    character.name.toLowerCase().includes(keyword.toLowerCase()),
+  );
+
   return (
     <section className="container mx-auto my-32 px-4 lg:px-8">
-      <TitlePage title="characters" variant="cyan" />
+      <TitlePage title="Characters" variant="cyan" />
 
       <SearchInput
         keyword={keyword}
-        placeholder="characters"
+        placeholder="Characters"
         onSearchChange={handleSearchChange}
         onClearSearch={handleClearSearch}
       />
 
-      {loading ? (
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
-          {Array.from({ length: 20 }, (_, index) => (
-            <CharacterItemSkeleton key={index} />
-          ))}
-        </ul>
-      ) : error ? (
-        <p className="text-center text-red-400">Error: {error.message}</p>
-      ) : (
-        <>
-          <div>
-            {data.characters.results.length > 0 ? (
-              <CharactersList results={data.characters.results} />
-            ) : (
-              <p className="text-center">No characters found</p>
-            )}
-          </div>
+      <div>
+        {loading ? (
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+            {Array.from({ length: 20 }, (_, index) => (
+              <CharacterItemSkeleton key={index} />
+            ))}
+          </ul>
+        ) : error ? (
+          <p className="text-center text-red-400">Error: {error.message}</p>
+        ) : filteredResults.length > 0 ? (
+          <CharactersList results={filteredResults} />
+        ) : (
+          <p className="text-center">No characters found</p>
+        )}
+      </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
+        <ButtonPagination
+          variant="prev"
+          color="cyan"
+          disabled={!prev}
+          onClick={() => handlePageChange(page - 1)}
+        />
+
+        {createPaginationRange().map((pageNumber, index) =>
+          typeof pageNumber === "number" ? (
             <ButtonPagination
-              variant="prev"
+              key={index}
               color="cyan"
-              disabled={!data.characters.info.prev}
-              onClick={() => handlePageChange(page - 1)}
+              variant="value"
+              value={pageNumber}
+              active={page === pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
             />
+          ) : (
+            <span key={index} className="mx-2 text-gray-500">
+              ...
+            </span>
+          ),
+        )}
 
-            {createPaginationRange().map((pageNumber, index) =>
-              typeof pageNumber === "number" ? (
-                <ButtonPagination
-                  key={index}
-                  color="cyan"
-                  variant="value"
-                  value={pageNumber}
-                  active={page === pageNumber}
-                  onClick={() => handlePageChange(pageNumber)}
-                />
-              ) : (
-                <span key={index} className="mx-2 text-gray-500">
-                  ...
-                </span>
-              ),
-            )}
-
-            <ButtonPagination
-              variant="next"
-              color="cyan"
-              disabled={!data.characters.info.next}
-              onClick={() => handlePageChange(page + 1)}
-            />
-          </div>
-        </>
-      )}
+        <ButtonPagination
+          variant="next"
+          color="cyan"
+          disabled={!next}
+          onClick={() => handlePageChange(page + 1)}
+        />
+      </div>
     </section>
   );
 }
