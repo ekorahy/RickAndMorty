@@ -112,7 +112,7 @@ export default function EpisodesSection() {
             {filteredResults.length > 0 ? (
               <EpisodesList results={filteredResults} />
             ) : (
-              <p>Episodes not found</p>
+              <p className="text-center">Episodes not found</p>
             )}
           </div>
 
