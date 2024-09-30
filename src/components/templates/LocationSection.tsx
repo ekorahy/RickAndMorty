@@ -103,7 +103,7 @@ export default function LocationsSection() {
             {data.locations.results.length > 0 ? (
               <LocationList results={data.locations.results} />
             ) : (
-              <p>No locations found</p>
+              <p className="text-center">No locations found</p>
             )}
           </div>
 

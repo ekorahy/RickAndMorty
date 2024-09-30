@@ -109,7 +109,7 @@ export default function CharacterDetailSection({ id }: { id: string }) {
           </table>
         </div>
       ) : (
-        !loading && <p>No character data found</p>
+        !loading && <p className="text-center">No character data found</p>
       )}
     </section>
   );

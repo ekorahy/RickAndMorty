@@ -69,7 +69,7 @@ export default function LocationDetailSection({ id }: { id: string }) {
           </tbody>
         </table>
       ) : (
-        !loading && <p>No location data found</p>
+        !loading && <p className="text-center">No location data found</p>
       )}
     </section>
   );

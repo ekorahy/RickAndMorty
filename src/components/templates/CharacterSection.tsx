@@ -103,7 +103,7 @@ export default function CharacterSection() {
             {data.characters.results.length > 0 ? (
               <CharactersList results={data.characters.results} />
             ) : (
-              <p>No characters found</p>
+              <p className="text-center">No characters found</p>
             )}
           </div>
 
