@@ -26,3 +26,11 @@ interface ResidentsListProps {
   residents: ResidentItemProps[],
   variant: ResidentItemVariant;
 }
+
+interface SearchInputLocationsProps {
+  keyword: string;
+  placeholder: string;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClearSearch: () => void;
+  data: LocationItemProps[];
+}
