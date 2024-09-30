@@ -42,9 +42,7 @@ export default function CharacterItem({
           {species}
         </p>
       </div>
-      <h4 className="w-max text-lg font-bold group-hover:text-cyan-400">
-        {name}
-      </h4>
+      <h4 className="text-lg font-bold group-hover:text-cyan-400">{name}</h4>
       <Status variant={validStatus} />
     </li>
   );
