@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Characters() {
   return (
-    <ApolloProviderSection withSuspense={false}>
+    <ApolloProviderSection withSuspense>
       <CharacterSection />
     </ApolloProviderSection>
   );

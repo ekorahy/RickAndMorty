@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function Locations() {
   return (
-    <ApolloProviderSection withSuspense={false}>
+    <ApolloProviderSection withSuspense>
       <LocationsSection />
     </ApolloProviderSection>
   );
