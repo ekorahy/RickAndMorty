@@ -32,7 +32,7 @@ export default function LocationsSection() {
 
   useEffect(() => {
     if (!searchParams.get("page")) {
-      router.push(`?page=1`);
+      router.push("?page=1");
     }
   }, [searchParams, router]);
 
@@ -78,69 +78,72 @@ export default function LocationsSection() {
     return range;
   };
 
+  const { results } = data?.locations || { results: [], info: {} };
+  const { next, prev } = data?.locations?.info || {};
+
+  const filteredResults = results.filter((location: { name: string }) =>
+    location.name.toLowerCase().includes(keyword.toLowerCase()),
+  );
+
   return (
     <section className="container mx-auto my-32 px-4 lg:px-8">
       <TitlePage title="Locations" variant="fuchsia" />
 
       <SearchInput
         keyword={keyword}
-        placeholder="locations"
+        placeholder="Locations"
         onSearchChange={handleSearchChange}
         onClearSearch={handleClearSearch}
       />
 
-      {loading ? (
-        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
-          {Array.from({ length: 20 }, (_, index) => (
-            <LocationItemSkeleton key={index} />
-          ))}
-        </ul>
-      ) : error ? (
-        <p className="text-center text-red-400">Error: {error.message}</p>
-      ) : (
-        <>
-          <div>
-            {data.locations.results.length > 0 ? (
-              <LocationList results={data.locations.results} />
-            ) : (
-              <p className="text-center">No locations found</p>
-            )}
-          </div>
+      <div>
+        {loading ? (
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+            {Array.from({ length: 20 }, (_, index) => (
+              <LocationItemSkeleton key={index} />
+            ))}
+          </ul>
+        ) : error ? (
+          <p className="text-center text-red-400">Error: {error.message}</p>
+        ) : filteredResults.length > 0 ? (
+          <LocationList results={filteredResults} />
+        ) : (
+          <p className="text-center">No locations found</p>
+        )}
+      </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
+        <ButtonPagination
+          variant="prev"
+          color="fuchsia"
+          disabled={!prev}
+          onClick={() => handlePageChange(page - 1)}
+        />
+
+        {createPaginationRange().map((pageNumber, index) =>
+          typeof pageNumber === "number" ? (
             <ButtonPagination
-              variant="prev"
+              key={index}
               color="fuchsia"
-              disabled={!data.locations.info.prev}
-              onClick={() => handlePageChange(page - 1)}
+              variant="value"
+              value={pageNumber}
+              active={page === pageNumber}
+              onClick={() => handlePageChange(pageNumber)}
             />
+          ) : (
+            <span key={index} className="mx-2 text-gray-500">
+              ...
+            </span>
+          ),
+        )}
 
-            {createPaginationRange().map((pageNumber, index) =>
-              typeof pageNumber === "number" ? (
-                <ButtonPagination
-                  key={index}
-                  color="fuchsia"
-                  variant="value"
-                  value={pageNumber}
-                  active={page === pageNumber}
-                  onClick={() => handlePageChange(pageNumber)}
-                />
-              ) : (
-                <span key={index} className="mx-2 text-gray-500">
-                  ...
-                </span>
-              ),
-            )}
-
-            <ButtonPagination
-              variant="next"
-              color="fuchsia"
-              disabled={!data.locations.info.next}
-              onClick={() => handlePageChange(page + 1)}
-            />
-          </div>
-        </>
-      )}
+        <ButtonPagination
+          variant="next"
+          color="fuchsia"
+          disabled={!next}
+          onClick={() => handlePageChange(page + 1)}
+        />
+      </div>
     </section>
   );
 }

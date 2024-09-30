@@ -50,6 +50,7 @@ export default function EpisodesSection() {
   };
 
   const createPaginationRange = () => {
+    const pages = data?.episodes?.info?.pages || 1;
     const visiblePages = screenWidth >= 1024 ? 7 : 5;
     const range = [];
 
@@ -78,14 +79,12 @@ export default function EpisodesSection() {
   };
 
   const { results } = data?.episodes || {};
-  const { next, prev, pages } = data?.episodes?.info || {};
+  const { next, prev } = data?.episodes?.info || {};
 
   const filteredResults =
     results?.filter((episode: { name: string }) =>
       episode.name.toLowerCase().includes(keyword.toLowerCase()),
     ) || [];
-
-  const paginationRange = createPaginationRange();
 
   return (
     <section className="container mx-auto my-32 px-4 lg:px-8">
@@ -112,7 +111,7 @@ export default function EpisodesSection() {
             {filteredResults.length > 0 ? (
               <EpisodesList results={filteredResults} />
             ) : (
-              <p className="text-center">Episodes not found</p>
+              <p className="text-center">No episodes found</p>
             )}
           </div>
 
@@ -124,7 +123,7 @@ export default function EpisodesSection() {
               onClick={() => handlePageChange(page - 1)}
             />
 
-            {paginationRange.map((pageNumber, index) =>
+            {createPaginationRange().map((pageNumber, index) =>
               typeof pageNumber === "number" ? (
                 <ButtonPagination
                   key={index}
