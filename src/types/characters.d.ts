@@ -13,3 +13,11 @@ interface CharactersListProps {
 interface CharacterDetailSectionProps {
   id: string;
 }
+
+interface SearchInputCharactersProps {
+  keyword: string;
+  placeholder: string;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClearSearch: () => void;
+  data: CharacterItemProps[];
+}

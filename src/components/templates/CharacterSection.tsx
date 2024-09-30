@@ -6,10 +6,10 @@ import CharactersList from "../organisms/CharactersList";
 import TitlePage from "../atoms/TitlePage";
 import { useRouter, useSearchParams } from "next/navigation";
 import ButtonPagination from "../atoms/ButtonPagination";
-import SearchInput from "../molecules/SearchInput";
 import { useState, useEffect } from "react";
 import CharacterItemSkeleton from "../molecules/CharacterItemSkeleton";
 import React from "react";
+import SearchInputCharacters from "../molecules/SearchInputCharacters";
 
 export default function CharacterSection() {
   const searchParams = useSearchParams();
@@ -89,11 +89,12 @@ export default function CharacterSection() {
     <section className="container mx-auto my-32 px-4 lg:px-8">
       <TitlePage title="Characters" variant="cyan" />
 
-      <SearchInput
+      <SearchInputCharacters
         keyword={keyword}
         placeholder="Characters"
         onSearchChange={handleSearchChange}
         onClearSearch={handleClearSearch}
+        data={filteredResults}
       />
 
       <div>
