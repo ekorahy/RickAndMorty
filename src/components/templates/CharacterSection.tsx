@@ -8,6 +8,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import ButtonPagination from "../atoms/ButtonPagination";
 import SearchInput from "../molecules/SearchInput";
 import { useState, useEffect } from "react";
+import CharacterItemSkeleton from "../molecules/CharacterItemSkeleton";
+import React from "react";
 
 export default function CharacterSection() {
   const searchParams = useSearchParams();
@@ -48,6 +50,7 @@ export default function CharacterSection() {
   };
 
   const createPaginationRange = () => {
+    const pages = data?.characters?.info?.pages || 1;
     const visiblePages = screenWidth >= 1024 ? 7 : 5;
     const range = [];
 
@@ -75,18 +78,6 @@ export default function CharacterSection() {
     return range;
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
-  const { results } = data.characters;
-  const { next, prev, pages } = data.characters.info;
-
-  const filteredResults = results.filter((character: { name: string }) =>
-    character.name.toLowerCase().includes(keyword.toLowerCase()),
-  );
-
-  const paginationRange = createPaginationRange();
-
   return (
     <section className="container mx-auto my-32 px-4 lg:px-8">
       <TitlePage title="characters" variant="cyan" />
@@ -98,45 +89,58 @@ export default function CharacterSection() {
         onClearSearch={handleClearSearch}
       />
 
-      <div>
-        {filteredResults.length > 0 ? (
-          <CharactersList results={filteredResults} />
-        ) : (
-          <p>No characters found</p>
-        )}
-      </div>
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
-        <ButtonPagination
-          variant="prev"
-          color="cyan"
-          disabled={!prev}
-          onClick={() => handlePageChange(page - 1)}
-        />
+      {loading ? (
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-8">
+          {Array.from({ length: 20 }, (_, index) => (
+            <CharacterItemSkeleton key={index} />
+          ))}
+        </ul>
+      ) : error ? (
+        <p className="text-center text-red-400">Error: {error.message}</p>
+      ) : (
+        <>
+          <div>
+            {data.characters.results.length > 0 ? (
+              <CharactersList results={data.characters.results} />
+            ) : (
+              <p>No characters found</p>
+            )}
+          </div>
 
-        {paginationRange.map((pageNumber, index) =>
-          typeof pageNumber === "number" ? (
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-2 lg:gap-4">
             <ButtonPagination
-              key={index}
+              variant="prev"
               color="cyan"
-              variant="value"
-              value={pageNumber}
-              active={page === pageNumber}
-              onClick={() => handlePageChange(pageNumber)}
+              disabled={!data.characters.info.prev}
+              onClick={() => handlePageChange(page - 1)}
             />
-          ) : (
-            <span key={index} className="mx-2 text-gray-500">
-              ...
-            </span>
-          ),
-        )}
 
-        <ButtonPagination
-          variant="next"
-          color="cyan"
-          disabled={!next}
-          onClick={() => handlePageChange(page + 1)}
-        />
-      </div>
+            {createPaginationRange().map((pageNumber, index) =>
+              typeof pageNumber === "number" ? (
+                <ButtonPagination
+                  key={index}
+                  color="cyan"
+                  variant="value"
+                  value={pageNumber}
+                  active={page === pageNumber}
+                  onClick={() => handlePageChange(pageNumber)}
+                />
+              ) : (
+                <span key={index} className="mx-2 text-gray-500">
+                  ...
+                </span>
+              ),
+            )}
+
+            <ButtonPagination
+              variant="next"
+              color="cyan"
+              disabled={!data.characters.info.next}
+              onClick={() => handlePageChange(page + 1)}
+            />
+          </div>
+        </>
+      )}
     </section>
   );
 }
