@@ -6,7 +6,9 @@
   body {
     @apply bg-slate-950 text-slate-50;
   }
+}
 
+@layer utilities {
   .text-outline {
     -webkit-text-stroke: 1px #f8fafc;
   }
