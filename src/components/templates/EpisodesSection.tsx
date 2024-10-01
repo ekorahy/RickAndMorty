@@ -5,11 +5,11 @@ import { useQuery } from "@apollo/client";
 import EpisodesList from "../organisms/EpisodesList";
 import TitlePage from "../atoms/TitlePage";
 import ButtonPagination from "../atoms/ButtonPagination";
-import SearchInput from "../molecules/SearchInput";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import EpisodeItemSkeleton from "../molecules/EpisodeItemSkeleton";
 import React from "react";
+import SearchInputEpisodes from "../molecules/SearchInputEpisodes";
 
 export default function EpisodesSection() {
   const searchParams = useSearchParams();
@@ -38,7 +38,7 @@ export default function EpisodesSection() {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newKeyword = e.target.value;
-    router.push(`?page=1&keyword=${newKeyword}`);
+    router.push(`?page=${page}&keyword=${newKeyword}`);
   };
 
   const handleClearSearch = () => {
@@ -90,11 +90,12 @@ export default function EpisodesSection() {
     <section className="container mx-auto my-32 px-4 lg:px-8">
       <TitlePage title="Episodes" variant="amber" />
 
-      <SearchInput
+      <SearchInputEpisodes
         keyword={keyword}
         placeholder="episodes"
         onSearchChange={handleSearchChange}
         onClearSearch={handleClearSearch}
+        data={filteredResults}
       />
 
       {loading ? (

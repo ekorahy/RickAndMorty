@@ -43,13 +43,6 @@ interface ButtonPaginationProps {
   onClick: () => void;
 }
 
-interface SearchInputProps {
-  keyword: string;
-  placeholder: string;
-  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClearSearch: () => void;
-}
-
 interface ApolloProviderSectionProps {
   withSuspense: boolean;
   children: ReactNode;
