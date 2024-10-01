@@ -3,6 +3,7 @@ import "../styles/globals.css";
 import { inter } from "@/fonts/fonts";
 import Header from "@/components/organisms/Header";
 import Main from "@/components/organisms/Main";
+import Footer from "@/components/molecules/Footer";
 
 export const metadata: Metadata = {
   title: {
@@ -22,6 +23,8 @@ export default function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <Header />
         <Main>{children}</Main>
+
+          <Footer />
       </body>
     </html>
   );

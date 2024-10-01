@@ -86,7 +86,7 @@ export default function CharacterSection() {
   );
 
   return (
-    <section className="container mx-auto my-32 px-4 lg:px-8">
+    <section className="container mx-auto mb-16 mt-32 px-4 lg:px-8">
       <TitlePage title="Characters" variant="cyan" />
 
       <SearchInputCharacters

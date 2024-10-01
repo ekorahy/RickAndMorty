@@ -86,7 +86,7 @@ export default function LocationsSection() {
   );
 
   return (
-    <section className="container mx-auto my-32 px-4 lg:px-8">
+    <section className="container mx-auto mt-32 mb-16 px-4 lg:px-8">
       <TitlePage title="Locations" variant="fuchsia" />
 
       <SearchInputLocations
