@@ -38,7 +38,7 @@ export default function CharacterSection() {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newKeyword = e.target.value;
-    router.push(`?page=1&keyword=${newKeyword}`);
+    router.push(`?page=${page}&keyword=${newKeyword}`);
   };
 
   const handleClearSearch = () => {
