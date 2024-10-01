@@ -12,7 +12,7 @@ export default function EpisodeDetailSection({ id }: { id: string }) {
   });
 
   return (
-    <section className="container mx-auto my-32 overflow-hidden px-4 lg:px-8">
+    <section className="container mx-auto mt-32 mb-16 overflow-hidden px-4 lg:px-8">
       <TitlePage
         title={
           loading ? "Loading..." : data?.episode?.name || "Episode Detail"

@@ -87,7 +87,7 @@ export default function EpisodesSection() {
     ) || [];
 
   return (
-    <section className="container mx-auto my-32 px-4 lg:px-8">
+    <section className="container mx-auto mt-32 mb-16 px-4 lg:px-8">
       <TitlePage title="Episodes" variant="amber" />
 
       <SearchInputEpisodes
