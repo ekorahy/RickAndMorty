@@ -12,3 +12,11 @@ interface EpisodesListProps {
 interface EpisodeDetailSectionProps {
   id: string;
 }
+
+interface SearchInputEpisodesProps {
+  keyword: string;
+  placeholder: string;
+  onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClearSearch: () => void;
+  data: EpisodeItemProps[];
+}
