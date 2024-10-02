@@ -2,7 +2,7 @@
 ![Rick and Morty Explorer Preview](https://github.com/user-attachments/assets/84285506-6687-4b05-a5a1-768077e4b983)
 
 ## Features ✨
-- **List Characters:** Browse through the complete list of characters from the show.
+- **List Characters:** Navigate through an extensive list of characters from the series.
 - **Character Details:** Get in-depth information about each character, including their status, species, and origin.
 - **Search Characters:** Easily search for your favorite characters by name.
 - **Pagination:** Page navigation (characters, locations, and episodes)
@@ -30,7 +30,7 @@ Follow these instructions to get a copy of the project up and running on your lo
 
 Make sure you have the following installed on your local machine:
 - [Node.js](https://nodejs.org/) (v16 or higher)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+- [pnpm](https://pnpm.io/) (recommended package manager)
 
 ### Installation
 1. Clone the repository:
@@ -40,9 +40,7 @@ Make sure you have the following installed on your local machine:
 
 2. Install dependencies:
    ```bash
-   npm install
-   # or
-   yarn install
+   pnpm install
 
 3. Set up environment variables:
    - Create a .env.local file in the root directory.
@@ -52,11 +50,9 @@ Make sure you have the following installed on your local machine:
 
 4. Run the development server:
    ```bash
-   npm run dev
-   # or
-   yarn dev
+   pnpm dev
 
-   Open [http://localhost:3000](http://localhost:3000) with your browser to see the application in action.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application in action.
 
 ## Deployment 🚀
 
