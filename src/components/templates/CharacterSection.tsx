@@ -16,8 +16,10 @@ export default function CharacterSection() {
   const router = useRouter();
   const [screenWidth, setScreenWidth] = useState(0);
 
+  const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
+  const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
+
   const page = parseInt(searchParams.get("page") || "1", 10);
-  const keyword = searchParams.get("keyword") || "";
 
   const { loading, error, data } = useQuery(GET_CHARACTERS, {
     variables: { page },
@@ -36,17 +38,31 @@ export default function CharacterSection() {
     }
   }, [searchParams, router]);
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedKeyword(keyword);
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [keyword]);
+
+  useEffect(() => {
+    router.push(`?page=${page}&keyword=${debouncedKeyword}`);
+  }, [debouncedKeyword, page, router]);
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newKeyword = e.target.value;
-    router.push(`?page=${page}&keyword=${newKeyword}`);
+    setKeyword(e.target.value);
   };
 
   const handleClearSearch = () => {
+    setKeyword("");
     router.push(`?page=${page}`);
   };
 
   const handlePageChange = (newPage: number) => {
-    router.push(`?page=${newPage}&keyword=${keyword}`);
+    router.push(`?page=${newPage}&keyword=${debouncedKeyword}`);
   };
 
   const createPaginationRange = () => {
@@ -82,7 +98,7 @@ export default function CharacterSection() {
   const { next, prev } = data?.characters?.info || {};
 
   const filteredResults = results.filter((character: { name: string }) =>
-    character.name.toLowerCase().includes(keyword.toLowerCase()),
+    character.name.toLowerCase().includes(debouncedKeyword.toLowerCase()),
   );
 
   return (
