@@ -75,7 +75,8 @@ This project uses the **Rick and Morty GraphQL API**. You can check out the docu
 ### Example Queries
 
 - **Fetch all characters:**
-  ```query {
+  ```bash
+  query {
     characters(page: 1) {
       results {
         id
@@ -86,13 +87,14 @@ This project uses the **Rick and Morty GraphQL API**. You can check out the docu
   }
 
 - **Fetch a specific episode:**
-  ```query {
-  episode(id: "1") {
-    name
-    air_date
-    episode
-  }
-}
+  ```bash
+  query {
+     episode(id: "1") {
+       name
+       air_date
+       episode
+     }
+   }
 
 ## Folder Structure 📂
 ```
