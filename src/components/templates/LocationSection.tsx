@@ -16,8 +16,10 @@ export default function LocationsSection() {
   const router = useRouter();
   const [screenWidth, setScreenWidth] = useState(0);
 
+  const [keyword, setKeyword] = useState(searchParams.get("keyword") || "");
+  const [debouncedKeyword, setDebouncedKeyword] = useState(keyword);
+
   const page = parseInt(searchParams.get("page") || "1", 10);
-  const keyword = searchParams.get("keyword") || "";
 
   const { loading, error, data } = useQuery(GET_LOCATIONS, {
     variables: { page },
@@ -36,17 +38,31 @@ export default function LocationsSection() {
     }
   }, [searchParams, router]);
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedKeyword(keyword);
+    }, 300);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [keyword]);
+
+  useEffect(() => {
+    router.push(`?page=${page}&keyword=${debouncedKeyword}`);
+  }, [debouncedKeyword, page, router]);
+
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newKeyword = e.target.value;
-    router.push(`?page=${page}&keyword=${newKeyword}`);
+    setKeyword(e.target.value);
   };
 
   const handleClearSearch = () => {
+    setKeyword("");
     router.push(`?page=${page}`);
   };
 
   const handlePageChange = (newPage: number) => {
-    router.push(`?page=${newPage}&keyword=${keyword}`);
+    router.push(`?page=${newPage}&keyword=${debouncedKeyword}`);
   };
 
   const createPaginationRange = () => {
@@ -82,11 +98,11 @@ export default function LocationsSection() {
   const { next, prev } = data?.locations?.info || {};
 
   const filteredResults = results.filter((location: { name: string }) =>
-    location.name.toLowerCase().includes(keyword.toLowerCase()),
+    location.name.toLowerCase().includes(debouncedKeyword.toLowerCase()),
   );
 
   return (
-    <section className="container mx-auto mt-32 mb-16 px-4 lg:px-8">
+    <section className="container mx-auto mb-16 mt-32 px-4 lg:px-8">
       <TitlePage title="Locations" variant="fuchsia" />
 
       <SearchInputLocations
